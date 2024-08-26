@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user";
 
 const getCurrentUser = async (req: Request, res: Response) => {
+    console.log('getCurrentUser -> ', req, res)
     try {
         const currentUser = await User.findOne({ _id: req.userId });
         if(!currentUser) {
@@ -15,6 +16,7 @@ const getCurrentUser = async (req: Request, res: Response) => {
     }
 }
 const createCurrentUser = async (req: Request, res: Response) => {
+    console.log('createCurrentUser -> ', req, res)
     try {
         const { auth0Id } = req.body;
         const existingUser = await User.findOne({ auth0Id });
@@ -34,6 +36,7 @@ const createCurrentUser = async (req: Request, res: Response) => {
 };
 
 const updateCurrentUser = async (req: Request, res: Response) => {
+    console.log('updateCurrentUser -> ', req, res)
     try {
         const { name, addressLine1, country, city } = req.body;
         const user = await User.findById(req.userId);

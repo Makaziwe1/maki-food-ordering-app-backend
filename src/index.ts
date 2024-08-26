@@ -15,18 +15,29 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+const bodyParser = require("body-parser")
+
+app.use(bodyParser.urlencoded({extended:false}))
 
 app.get("/health", async (req: Request, res: Response) =>{
     res.send({ message: "health OK!" });
 });
 
 app.use("/api/my/user", myUserRoute);
-app.use("/api/my/restaurant", MyRestaurantRoute);
+// app.use("/api/my/restaurant", (req, res) =>{
+//     upload.single('imageFile')
+//     console.log("requ -> ", req)
+//     console.log('Received request: ', req.body, 'Response: ', res)
+//     console.log('Files ->', req.files)
+// }, MyRestaurantRoute);
+
+app.use("/api/my/restaurant", MyRestaurantRoute)
+
 
 app.listen(7000, ()=>{
     console.log("server started on localhost:7000");
 });
-
